@@ -133,11 +133,7 @@ nav a:hover {
     padding: 20px 0;
 }
 
-/* ===============
-    ALL: IE Fixes
-   =============== */
-
-.ie7 .title {
+.title {
     padding-top: 20px;
 }
 
@@ -343,11 +339,6 @@ svg {
 .y.axis .zero line {
   stroke: #000;
   stroke-opacity: 1;
-}
-
-.title {
-  font: 400 78px "Source Sans Pro";
-  fill: #666;
 }
 
 .birthyear,
