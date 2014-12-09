@@ -1,29 +1,128 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>blog.buechi.name Visualisierung</title>
-  <link rel="stylesheet" href="../stylesheets/styles.css">
-  <link rel="stylesheet" href="../stylesheets/d3.css">
-  <script src="../javascripts/d3.min.js"></script>
-  <link rel="import" href="components/polymer/polymer.html">
-</head>
-<body>
-  <header class="header">
-    <h1>ChartTitle</h1>
-    <p>WhatThisChartIsAbout</p>
-  </header>
-  <section class="maindata">
-    <div class="chart"></div>
-  </section>
-  <section class="metadata">
-    <p>Data source: <a href="">DataSource</a></p>
-    <p>Chart created by: <a href="http://blog.buechi.name">Simon Buechi</a></p>
-    <p>Published on <a href="http://blog.buechi.name">blog.buechi.name</a></p>
-  </section>  
 
-  <script>
-  // D3 script code comes here
-  </script>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8" />
+  <!-- Set the viewport width to device width for mobile -->
+  <meta name="viewport" content="width=device-width" />
+
+  <title>Simon Büchi</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="Simon Büchi">
+  <meta name="publisher" content="Simon Büchi">
+  <meta name="content-language" content="en">
+  <meta name="robots" content="index, follow">
+  <link rel="stylesheet" href="../css/app.css" />
+  <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" href="../images/apple-touch-icon.png" />
+  <link rel="apple-touch-icon" sizes="57x57" href="../images/apple-touch-icon-57x57.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="76x76" href="../images/apple-touch-icon-76x76.png" />
+  <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png" />
+  <link rel="apple-touch-icon" sizes="120x120" href="../images/apple-touch-icon-120x120.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="../images/apple-touch-icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="152x152" href="../images/apple-touch-icon-152x152.png" />
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="../js/d3.min.js"></script>
+  <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+</head>
+
+<body>
+  <header class="row header">
+    <div class="large-12 medium-12 columns">
+      <h1 id="top">ChartTitle</h1>
+      <p>WhatThisChartIsAbout</p>
+    </div>
+  </header>
+  <section class="row">
+    <div class="large-12 medium-12 columns">
+      <div class="chart"></div>
+    </div>
+  </section>
+  <section class="row">
+    <div class="large-12 medium-12 columns">
+      <p>Data source: <a href="">DataSource</a></p>
+      <p>Chart created by: <a href="http://blog.buechi.name">Simon Buechi</a></p>
+      <p>Published on <a href="http://blog.buechi.name">blog.buechi.name</a></p>
+    </div>
+  </section>
+  <footer class="row footer">
+    <div class="large-12 medium-12 columns">
+      <p class="pfooter">&copy; Copyright 2014 Simon Buechi</p>
+    </div>
+  </footer>
+
+<script>
+ var data = d3.csv.parse(d3.select(csvsource).text());
+  var valueLabelWidth = 40; // space reserved for value labels (right)
+  var barHeight = 30; // height of one bar
+  var barLabelWidth = 100; // space reserved for bar labels
+  var barLabelPadding = 5; // padding between bar and bar labels (left)
+  var gridLabelHeight = 18; // space reserved for gridline labels
+  var gridChartOffset = 3; // space between start of grid and first bar
+  var maxBarWidth = 420; // width of the bar with the max value
+   
+  // accessor functions 
+  var barLabel = function(d) { return d['Name']; };
+  var barValue = function(d) { return parseFloat(d['Value']); };
+   
+  // scales
+  var yScale = d3.scale.ordinal().domain(d3.range(0, data.length)).rangeBands([0, data.length * barHeight]);
+  var y = function(d, i) { return yScale(i); };
+  var yText = function(d, i) { return y(d, i) + yScale.rangeBand() / 2; };
+  var x = d3.scale.linear().domain([0, d3.max(data, barValue)]).range([0, maxBarWidth]);
+  // svg container element
+  var chart = d3.select('.chart').append("svg")
+    .attr('width', maxBarWidth + barLabelWidth + valueLabelWidth)
+    .attr('height', gridLabelHeight + gridChartOffset + data.length * barHeight);
+
+  // bar labels
+  var labelsContainer = chart.append('g')
+    .attr('transform', 'translate(' + (barLabelWidth - barLabelPadding) + ',' + (gridLabelHeight + gridChartOffset) + ')'); 
+  labelsContainer.selectAll('text').data(data).enter().append('text')
+    .attr('y', yText)
+    .attr("dy", ".35em") // vertical-align: middle
+    .attr('text-anchor', 'end')
+    .attr("class", "txt")
+    .text(barLabel);
+
+  // bars
+  var barsContainer = chart.append('g')
+    .attr('transform', 'translate(' + barLabelWidth + ',' + (gridLabelHeight + gridChartOffset) + ')'); 
+  barsContainer.selectAll("rect").data(data).enter().append("rect")
+    .attr('y', y)
+    .attr('height', yScale.rangeBand() - 3)
+    .attr("class", "bar")
+    .attr("width",0)
+    .transition().duration(750)
+    .attr('width', function(d) { return x(barValue(d)); });
+
+  // bar value labels
+  barsContainer.selectAll("text").data(data).enter().append("text")
+    .attr("x", function(d) { return x(barValue(d)); })
+    .attr("y", yText)
+    .attr("dx", 5) // padding-left
+    .attr("dy", ".35em") // vertical-align: middle
+    .attr("text-anchor", "start") // text-align: right
+    .attr("class", "txt")
+    .text(function(d) { return d3.round(barValue(d), 2); });
+</script>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-1123863-1']);
+  _gaq.push(['_setDomainName', 'buechi.name']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
 
 </body>
+</html>
