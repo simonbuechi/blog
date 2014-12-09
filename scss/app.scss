@@ -39,15 +39,9 @@
 //   "foundation/components/visibility";
 
 
-h2 {
-	margin-top: $header-top-margin/2;
-}
 h1, h2, h3, h4, h5 {
 	letter-spacing: 1px;
 	color: #eee;
-}
-p {
-//	text-align: justify;
 }
 a {
 	text-decoration: underline;
@@ -55,27 +49,6 @@ a {
 		text-decoration: none;
 		color: #fff;
 	}
-}
-h1 a {
-	text-decoration: none;
-	color: #eee;
-}
-
-ul.navi{
-//	margin-top: rem-calc(20);
-}
-
-ul.no-bullet li {
-	padding-bottom: rem-calc(8);
-}
-.row {
-	padding-top: rem-calc(20);
-	padding-bottom: rem-calc(70);
-}
-
-.pfooter {
-	padding-bottom: 0;
-	margin-bottom: 0;
 }
 
 h4 {
