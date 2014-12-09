@@ -1,15 +1,17 @@
-@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700);
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600);
 
 body {
   padding:50px;
   font:16px/1.5 "Source Sans Pro", Helvetica, Arial, sans-serif;
-  color:#777;
+  color:#ccc;
   font-weight:300;
+  background-color: #222;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color:#222;
+  color:#eee;
   margin:0 0 20px;
+  font-weight: 600;
 }
 
 p, ul, ol, table, pre, dl {
