@@ -2,7 +2,7 @@
 // FOUNDATION SETTINGS
 //
 
-@import url(http://fonts.googleapis.com/css?family=Lato:400,900);
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600);
 
 // This is the default html and body font-size for the base rem value.
 $rem-base: 16px !default;
@@ -40,11 +40,11 @@ $rem-base: 16px !default;
 // We use these to control various global styles
  $body-bg: #222;
  $body-font-color: #ccc;
- $body-font-family: "Lato", "Helvetica", Arial, sans-serif;
+ $body-font-family: "Source Sans Pro", "Helvetica", Arial, sans-serif;
  $body-font-weight: normal;
  $body-font-style: normal;
 
- $header-font-family: "Lato", "Helvetica", Arial, sans-serif;
+ $header-font-family: "Source Sans Pro", "Helvetica", Arial, sans-serif;
 
 // We use this to control font-smoothing
  $font-smoothing: antialiased;
@@ -118,7 +118,7 @@ $rem-base: 16px !default;
 
 // We use these to control header font styles
 $header-font-family: $header-font-family;
-$header-font-weight: 900;
+$header-font-weight: 600;
 $header-font-style: normal;
 $header-font-color: #ccc;
 $header-line-height: 1;
