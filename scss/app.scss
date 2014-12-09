@@ -108,35 +108,25 @@ textarea {
 // font sizes media queries
 @media #{$small-up} {
 	h1 {
-		font-size: rem-calc(36);
+		font-size: 1.5rem;
 	}
 	h2 {
-		font-size: rem-calc(28);
-	}
-
-	h5 {
-		font-size: 1rem;
+		font-size: 1.1rem;
 	}
 }
 @media #{$medium-up} {
 	h1 {
-		font-size: rem-calc(54);
+		font-size: 1.8rem;
 	}
 	h2 {
-		font-size: rem-calc(30);
-	}
-	h5 {
-		font-size: 1rem;
+		font-size: 1.2rem;
 	}
 }
 @media #{$large-up} {
 	h1 {
-		font-size: 2.5rem;
+		font-size: 2rem;
 	}
 	h2 {
-		font-size: 1.6rem;
-	}
-	h5 {
-		font-size: 1rem;
+		font-size: 1.5rem;
 	}
 }
