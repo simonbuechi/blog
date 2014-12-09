@@ -1,20 +1,62 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>blog.buechi.name Visualisierung</title>
-    <link rel="stylesheet" href="../stylesheets/styles.css">
-    <link rel="stylesheet" href="../stylesheets/d3.css">
-    <script src="../javascripts/d3.min.js"></script>
-    
-    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
-  </head>
+
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8" />
+  <!-- Set the viewport width to device width for mobile -->
+  <meta name="viewport" content="width=device-width" />
+
+  <title>Simon Büchi</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="Simon Büchi">
+  <meta name="publisher" content="Simon Büchi">
+  <meta name="content-language" content="en">
+  <meta name="robots" content="index, follow">
+  <link rel="stylesheet" href="../css/app.css" />
+  <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" href="../images/apple-touch-icon.png" />
+  <link rel="apple-touch-icon" sizes="57x57" href="../images/apple-touch-icon-57x57.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="76x76" href="../images/apple-touch-icon-76x76.png" />
+  <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png" />
+  <link rel="apple-touch-icon" sizes="120x120" href="../images/apple-touch-icon-120x120.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="../images/apple-touch-icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="152x152" href="../images/apple-touch-icon-152x152.png" />
+</head>
+
 <body>
+  <header class="row header">
+    <div class="large-12 medium-12 columns">
+      <h1 id="top">ChartTitle</h1>
+      <p>WhatThisChartIsAbout</p>
+    </div>
+  </header>
+  <section class="row">
+    <div class="large-12 medium-12 columns">
+      <div class="chart"></div>
+    </div>
+  </section>
+  <section class="row">
+    <div class="large-12 medium-12 columns">
+      <p>Data source: <a href="">DataSource</a></p>
+      <p>Chart created by: <a href="http://blog.buechi.name">Simon Buechi</a></p>
+      <p>Published on <a href="http://blog.buechi.name">blog.buechi.name</a></p>
+    </div>
+  </section>
+  <footer class="row footer">
+    <div class="large-12 medium-12 columns">
+      <p class="pfooter">&copy; Copyright 2014 Simon Buechi</p>
+    </div>
+  </footer>
 
-<h1>Beispielchart1</h1>
-<p>Ergänzende Informationen</p>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="../javascripts/d3.min.js"></script>
+
 <script>
-
 var margin = {top: 40, right: 20, bottom: 30, left: 40},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
@@ -82,10 +124,23 @@ d3.tsv("data.tsv", type, function(error, data) {
       .on('mouseout', tip.hide)
 
 });
-
 function type(d) {
   d.frequency = +d.frequency;
   return d;
 }
-
 </script>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-1123863-1']);
+  _gaq.push(['_setDomainName', 'buechi.name']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+</body>
+</html>
