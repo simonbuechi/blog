@@ -3,12 +3,9 @@
 @import "chart";
 
 @import
-//   "foundation/components/thumbs",
-   "foundation/components/grid",
-   "foundation/components/block-grid",
-   "foundation/components/clearing",
-   "foundation/components/type";
 
+   "foundation/components/grid";
+//   "foundation/components/thumbs",
 //   "foundation/components/buttons",
 //   "foundation/components/accordion",
 //   "foundation/components/alert-boxes",
@@ -40,26 +37,28 @@
 
 
 h1, h2, h3, h4, h5 {
-	letter-spacing: 1px;
-	color: #eee;
+	color: #ddd;
 }
 a {
+	color: #ddd;
 	text-decoration: underline;
 	&:hover {
 		text-decoration: none;
 		color: #fff;
 	}
+	&:active {
+		color: #ddd;
+	}
+	&:visited {
+		color: #ddd;
+	}
 }
-button {
+button, .button {
 	background-color: #aaa;
 	&:hover {
 		background-color: #eee;		
 	}
 }
-textarea {
-	height: 5rem;
-}
-
 .invert {
 	color: #444;
 }
@@ -79,8 +78,8 @@ textarea {
 	h1 {
 		font-size: 1.5rem;
 	}
-	h2 {
-		font-size: 1.1rem;
+	h2, h3, h4, h5, h6 {
+		font-size: 1rem;
 	}
 }
 @media #{$medium-up} {
@@ -88,7 +87,10 @@ textarea {
 		font-size: 1.8rem;
 	}
 	h2 {
-		font-size: 1.2rem;
+		font-size: 1.3rem;
+	}
+	h3, h4, h5, h6 {
+		font-size: 1.1rem;
 	}
 }
 @media #{$large-up} {
@@ -97,5 +99,8 @@ textarea {
 	}
 	h2 {
 		font-size: 1.5rem;
+	}
+	h3, h4, h5, h6 {
+		font-size: 1.2rem;
 	}
 }

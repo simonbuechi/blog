@@ -1,63 +1,61 @@
-
+/* D3 chart basic styling */
 svg {
-  font: 10px sans-serif;
+  font: 14px "Source Sans Pro", sans-serif;
+  border: 1px solid #444;
 }
-
-.y.axis path {
-  display: none;
-}
-
-.y.axis line {
-  stroke: #fff;
-  stroke-opacity: .2;
-  shape-rendering: crispEdges;
-}
-
-.y.axis .zero line {
-  stroke: #000;
-  stroke-opacity: 1;
-}
-
-.title {
-  font: 400 78px "Source Sans Pro";
-  fill: #666;
-}
-
-.birthyear,
-.age {
-  text-anchor: middle;
-}
-
-.birthyear {
+text {
   fill: #fff;
 }
 
+.highlight {
+  fill: #FF6666;
+}
+/* Line  styling */
+.line {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 2px;
+}
+/* Bar  styling */
 rect {
-  fill-opacity: .6;
-  fill: #e377c2;
+  fill: #999;
 }
 
-rect:first-child {
-  fill: #1f77b4;
+rect:hover {
+  fill: #ccc;
 }
-
+text.bar {
+  fill: #000;
+  font-weight: bold;
+}
+/* Axis  styling */
 .axis path,
 .axis line {
   fill: none;
-  stroke: #000;
+  stroke: #444;
   shape-rendering: crispEdges;
 }
+.y.axis path, .x.axis path {
+  stroke: #444;
+}
+.y.axis line {
+  stroke: #444;
+  shape-rendering: crispEdges;
+}
+.y.axis .zero line {
+  stroke: #444;
+  stroke-opacity: 1;
+}
 
+/* Tooltip styling */
 .d3-tip {
   line-height: 1;
-  font-weight: bold;
-  padding: 12px;
+  font-weight: normal;
+  padding: 10px;
   background: rgba(0, 0, 0, 0.8);
   color: #fff;
   border-radius: 2px;
 }
-
-/* Creates a small triangle extender for the tooltip */
 .d3-tip:after {
   box-sizing: border-box;
   display: inline;
@@ -69,10 +67,17 @@ rect:first-child {
   position: absolute;
   text-align: center;
 }
-
-/* Style northward tooltips differently */
 .d3-tip.n:after {
   margin: -1px 0 0 0;
   top: 100%;
   left: 0;
+}
+
+/* Specifics */
+.birthyear,
+.age {
+  text-anchor: middle;
+}
+.birthyear {
+  fill: #fff;
 }
