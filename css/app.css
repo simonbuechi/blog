@@ -14,14 +14,23 @@ If you require to comma separate your list
  rem-calc((16px, 32px, 48), 8px);
 */
 /* D3 chart basic styling */
-svg { font: 14px "Source Sans Pro", sans-serif; border: 1px solid #444; }
+svg { font: 14px "Source Sans Pro", sans-serif; border: 1px solid #444; background-color: #222; }
 
 text { fill: #fff; }
 
-.highlight { fill: #FF6666; }
+/* Standards and norms */
+rect.highlight { fill: #FF3333; }
+
+rect.highlight:hover { fill: #FF6666; }
+
+path.highlight { stroke: #FF6666; }
+
+rect.est { stroke-dasharray: 5,5; }
+
+rect.plan { stroke-dasharray: 5,5; }
 
 /* Line  styling */
-.line { fill: none; stroke: #ccc; stroke-width: 2px; }
+.line { fill: none; stroke: #ccc; stroke-width: 4px; }
 
 /* Bar  styling */
 rect { fill: #999; }

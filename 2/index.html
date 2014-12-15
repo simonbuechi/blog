@@ -9,7 +9,7 @@
   <!-- Set the viewport width to device width for mobile -->
   <meta name="viewport" content="width=device-width" />
 
-  <title>Winterthurs Steuerfuss im Vergleich</title>
+  <title>Entwicklung der Ausgaben der Stadt Winterthur</title>
   <meta name="keywords" content="">
   <meta name="description" content="">
   <meta name="author" content="Simon Buechi">
@@ -33,13 +33,18 @@
 <body>
   <header class="row header">
     <div class="large-12 medium-12 columns">
-      <h1 id="top">Winterthurs Steuerfuss im Vergleich</h1>
-      <p>Steuerfüsse 2014 der grössten Zürcher Gemeinden. Quelle: Kanton Zürich.</p>
+      <h1>Entwicklung der Ausgaben der Stadt Winterthur</h1>
+      <p>Aufwand der Stadt Winterthur über die letzten Jahre mit dem aktuellen Stand für 2014 und dem stadträtlichen Budget für 2015.</p>
     </div>
   </header>
   <section class="row">
     <div class="large-12 medium-12 columns">
       <div class="chart"></div>
+    </div>
+  </section>
+  <section class="row">
+    <div class="large-12 medium-12 columns">
+      <p>Quellen: Stadt Winterthur Jahresrechnungen (2003-2013), Novemberbrief (2014) und Budgetvorschlag (2015).</p>
     </div>
   </section>
   <footer class="row footer">
@@ -48,25 +53,32 @@
     </div>
   </footer>
 
+
 <script>
-var margin = {top: 20, right: 20, bottom: 30, left: 120}, // margins for axis
-    width = 960 - margin.left - margin.right,  // width of svg
-    height = 600 - margin.top - margin.bottom;  // height of svg
 
-var y = d3.scale.ordinal()
-    .rangeRoundBands([0, height], .2);
+var margin = {top: 20, right: 20, bottom: 30, left: 50},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
 
-var x = d3.scale.linear()
+var parseDate = d3.time.format("%Y").parse;
+
+var x = d3.time.scale()
     .range([0, width]);
+
+var y = d3.scale.linear()
+    .range([height, 0]);
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
 
 var yAxis = d3.svg.axis()
     .scale(y)
     .orient("left");
 
-var xAxis = d3.svg.axis()
-    .scale(x)
-    .orient("bottom")
-    .tickFormat(d3.format("0"));
+var line = d3.svg.line()
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.aufwand); });
 
 var svg = d3.select(".chart").append("svg")
     .attr("width", width + margin.left + margin.right)
@@ -75,8 +87,13 @@ var svg = d3.select(".chart").append("svg")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 d3.tsv("data.tsv", function(error, data) {
-  y.domain(data.map(function(d) { return d.gemeinde; }));
-  x.domain([0, 130]);
+  data.forEach(function(d) {
+    d.date = parseDate(d.date);
+    d.aufwand = +d.aufwand;
+  });
+
+  x.domain(d3.extent(data, function(d) { return d.date; }));
+  y.domain([1000,1500]);
 
   svg.append("g")
       .attr("class", "x axis")
@@ -85,28 +102,49 @@ d3.tsv("data.tsv", function(error, data) {
 
   svg.append("g")
       .attr("class", "y axis")
-      .call(yAxis);
+      .call(yAxis)
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Mio. CHF");
 
-  svg.selectAll(".bar")
-    .data(data)
-    .enter().append("rect")
-    .attr("class", function(d) { return (!d.style) ? "bar" : "bar " + d.style; })
-    .attr("y", function(d) { return y(d.gemeinde); })
-    .attr('height', y.rangeBand())
-    .attr("width",0)
-    .transition().duration(750).delay(function(d, i) { return i * 70; })
-    .attr("width", function(d) { return x(d.steuerfuss); });
+  svg.append("path")
+      .datum(data)
+      .attr("class", "line")
+      .attr("d", line);
 
-  svg.selectAll("text.bar")
-    .data(data)
-    .enter().append("text")
-    .attr("class", "bar")
-    .attr("y", function(d) { return y(d.gemeinde) + 13; })
-    .attr("x", function(d) { return x(d.steuerfuss) - 5; })
-    .attr("text-anchor", "end")
-    .transition().delay(function(d, i) { return 750 + i * 70; })
-    .text(function(d) { return d3.round(d.steuerfuss, 0); });
+ /* Add 'curtain' rectangle to hide entire graph */
+  var curtain = svg.append('rect')
+    .attr('x', -1 * width)
+    .attr('y', -1 * height)
+    .attr('height', height)
+    .attr('width', width)
+    .attr('class', 'curtain')
+    .attr('transform', 'rotate(180)')
+    .style('fill', '#222')
+
+  /* Create a shared transition for anything we're animating */
+  var t = svg.transition()
+    .delay(750)
+    .duration(1000)
+    .ease('linear')
+    .each('end', function() {
+      d3.select('line.guide')
+        .transition()
+        .style('opacity', 1)
+        .remove()
+    });
+
+  t.select('rect.curtain')
+    .attr('width', 0);
+  t.select('line.guide')
+    .attr('transform', 'translate(' + width + ', 0)')
+
+
 });
+
 </script>
 
 <script type="text/javascript">
