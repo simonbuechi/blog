@@ -26,7 +26,6 @@
   <link rel="apple-touch-icon" sizes="120x120" href="../images/apple-touch-icon-120x120.png" />
   <link rel="apple-touch-icon" sizes="144x144" href="../images/apple-touch-icon-144x144.png" />
   <link rel="apple-touch-icon" sizes="152x152" href="../images/apple-touch-icon-152x152.png" />
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <script src="../js/d3.min.js"></script>
 </head>
 
@@ -47,7 +46,6 @@
       <p class="pfooter">&copy; Copyright 2014 Simon Buechi</p>
     </div>
   </footer>
-
 
 <script>
 
@@ -107,7 +105,7 @@ d3.tsv("data.tsv", function(error, data) {
 
   svg.append("path")
       .datum(data)
-      .attr("class", "line")
+      .attr("class", "line thick")
       .attr("d", line);
 
  /* Add 'curtain' rectangle to hide entire graph */
