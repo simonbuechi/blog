@@ -4,43 +4,47 @@ svg {
   border: 1px solid #444;
   background-color: #222; // in case of creating a svg/png/jpg file
 }
+/* Text  styling */
 text {
   fill: #fff;
 }
-/* Standards and norms */
-rect.highlight {
-  fill: #FF3333;
+text.black {
+  fill: #000;
+  font-weight: normal;
 }
-rect.highlight:hover {
-  fill: #FF6666;
+text.small {
+  font-size: 8px;
 }
-path.highlight {
- stroke: #FF6666;
-}
-rect.est { 
-  stroke-dasharray: 5,5;
-}
-rect.plan { 
-  stroke-dasharray:5,5;
-}
-
 /* Line  styling */
-.line {
+path.line {
   fill: none;
   stroke: #ccc;
-  stroke-width: 4px;
+  stroke-width: 2px;
+}
+.line.thick {
+  stroke-width: 5px;  
+}
+.line.thin {
+  stroke-width: 1px;  
+}
+.line.highlight {
+  stroke: #FF6666;
+}
+path.line:hover {
+  stroke-width: 6px;  
 }
 /* Bar  styling */
 rect {
   fill: #999;
 }
-
 rect:hover {
   fill: #ccc;
 }
-text.bar {
-  fill: #000;
-  font-weight: bold;
+rect.highlight {
+  fill: #FF3333;
+}
+rect.highlight:hover {
+  fill: #FF6666;
 }
 /* Axis  styling */
 .axis path,
