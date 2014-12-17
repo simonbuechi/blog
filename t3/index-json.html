@@ -85,7 +85,7 @@ svg.call(tip);
 
 var data; // a global
 
-d3.json("data.json", function(error, json) {
+d3.json("https://script.google.com/macros/s/AKfycbxyjPbk7GJ5rUlk-RV3-UqZSBDJQCjJcNLf7utHQTnc85pMv2v6/exec?id=1VhV9Te79C_cKZirtvfmu5POOVUhgmPc8qR8srNyPiNA&sheet=2", function(error, json) {
   if (error) return console.warn(error);
   data = json;
   x.domain(data.map(function(d) { return d.letter; }));
