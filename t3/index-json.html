@@ -82,7 +82,12 @@ var svg = d3.select(".chart").append("svg")
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 svg.call(tip);
-d3.tsv("data.tsv", function(error, data) {
+
+var data; // a global
+
+d3.json("data.json", function(error, json) {
+  if (error) return console.warn(error);
+  data = json;
   x.domain(data.map(function(d) { return d.letter; }));
   y.domain([0, d3.max(data, function(d) { return d.value; })]);
   svg.append("g")
