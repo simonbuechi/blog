@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8" />
+  <!-- Set the viewport width to device width for mobile -->
+  <meta name="viewport" content="width=device-width" />
+
+  <title>Sample Line Chart</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="Simon Buechi">
+  <meta name="publisher" content="Simon Buechi">
+  <meta name="content-language" content="en">
+  <meta name="robots" content="index, follow">
+  <link rel="stylesheet" href="../css/app.css" />
+  <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" href="../images/apple-touch-icon.png" />
+  <link rel="apple-touch-icon" sizes="57x57" href="../images/apple-touch-icon-57x57.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="76x76" href="../images/apple-touch-icon-76x76.png" />
+  <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png" />
+  <link rel="apple-touch-icon" sizes="120x120" href="../images/apple-touch-icon-120x120.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="../images/apple-touch-icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="152x152" href="../images/apple-touch-icon-152x152.png" />
+  <script src="../js/d3.min.js"></script>
+</head>
+
+<body>
+  <header class="row header">
+    <div class="large-12 medium-12 columns">
+      <h1>Sample Line Chart</h1>
+      <p>Features: ...</p>
+    </div>
+  </header>
+  <section class="row">
+    <div class="large-12 medium-12 columns">
+      <div class="chart"></div>
+    </div>
+  </section>
+  <footer class="row footer">
+    <div class="large-12 medium-12 columns">
+      <p class="pfooter">&copy; Copyright 2014 Simon Buechi</p>
+    </div>
+  </footer>
+
+
+<script type="text/javascript">
+    calendarWeekHour('.chart', 900, 400, true);
+</script>
+
+<script>
+function calendarWeekHour(id, width, height, square)
+{
+    var calData = randomData(width, height, square);
+    console.log(calData);
+    var grid = d3.select(id).append("svg")
+                    .attr("width", width)
+                    .attr("height", height)
+                    .attr("class", "chart");
+
+    var row = grid.selectAll(".row")
+                  .data(calData)
+                .enter().append("svg:g")
+                  .attr("class", "row");
+
+    var col = row.selectAll(".cell")
+                 .data(function (d) { return d; })
+                .enter().append("svg:rect")
+                 .attr("class", "cell")
+                 .attr("x", function(d) { return d.x; })
+                 .attr("y", function(d) { return d.y; })
+                 .attr("width", function(d) { return d.width; })
+                 .attr("height", function(d) { return d.height; })
+                 .on('mouseover', function() {
+                    d3.select(this)
+                        .style('fill', '#0F0');
+                 })
+                 .on('mouseout', function() {
+                    d3.select(this)
+                        .style('fill', '#FFF');
+                 })
+                 .on('click', function() {
+                    console.log(d3.select(this));
+                 })
+                 .style("fill", '#FFF')
+                 .style("stroke", '#555');
+}
+
+////////////////////////////////////////////////////////////////////////
+
+/**
+*   randomData()        returns an array: [
+                                            [{id:value, ...}],
+                                            [{id:value, ...}],
+                                            [...],...,
+                                            ];
+                        ~ [
+                            [hour1, hour2, hour3, ...],
+                            [hour1, hour2, hour3, ...]
+                          ]
+
+*/
+function randomData(gridWidth, gridHeight, square)
+{
+    var data = new Array();
+    var gridItemWidth = gridWidth / 24;
+    var gridItemHeight = (square) ? gridItemWidth : gridHeight / 7;
+    var startX = gridItemWidth / 2;
+    var startY = gridItemHeight / 2;
+    var stepX = gridItemWidth;
+    var stepY = gridItemHeight;
+    var xpos = startX;
+    var ypos = startY;
+    var newValue = 0;
+    var count = 0;
+
+    for (var index_a = 0; index_a < 7; index_a++)
+    {
+        data.push(new Array());
+        for (var index_b = 0; index_b < 24; index_b++)
+        {
+            newValue = Math.round(Math.random() * (100 - 1) + 1);
+            data[index_a].push({ 
+                                time: index_b, 
+                                value: newValue,
+                                width: gridItemWidth,
+                                height: gridItemHeight,
+                                x: xpos,
+                                y: ypos,
+                                count: count
+                            });
+            xpos += stepX;
+            count += 1;
+        }
+        xpos = startX;
+        ypos += stepY;
+    }
+    return data;
+}
+</script>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-1123863-1']);
+  _gaq.push(['_setDomainName', 'buechi.name']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+</body>
+</html>
