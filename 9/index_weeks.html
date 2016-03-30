@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+svg {
+  font: 10px sans-serif;
+  shape-rendering: crispEdges;
+}
+
+.week {
+  fill: #ccc;
+  stroke: none;
+}
+
+.year {
+  fill: none;
+  stroke: #000;
+  stroke-width: 2px;
+}
+text {
+  stroke: none;
+  fill: #000;
+}
+</style>
+<body>
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script>
+
+Date.prototype.getWeekOfMonth = function(exact) {
+    var month = this.getMonth()
+        , year = this.getFullYear()
+        , firstWeekday = new Date(year, month, 1).getDay()
+        , lastDateOfMonth = new Date(year, month + 1, 0).getDate()
+        , offsetDate = this.getDate() + firstWeekday - 1
+        , index = 1 // start index at 0 or 1, your choice
+        , weeksInMonth = index + Math.ceil((lastDateOfMonth + firstWeekday - 7) / 7)
+        , week = index + Math.floor(offsetDate / 7)
+    ;
+    if (exact || week < 2 + index) return week;
+    return week === weeksInMonth ? index + 5 : week;
+};
+
+var width = 960,
+    height = 836,
+    cellSize = 10; // cell size
+
+var percent = d3.format(".1%"),
+    format = d3.time.format("%Y-%m-%d"),
+    getMonth = d3.time.format("%m"),
+    getWeek = d3.time.format("%W");
+
+var color = d3.scale.quantize()
+    .domain([-.05, .05])
+    .range(d3.range(11).map(function(d) { return "q" + d + "-11"; }));
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+  
+var year = svg.selectAll(".year").data(d3.range(1984, 2074)).enter().append("g")
+    .attr("transform", function(d,i) { return "translate(" + ((width - cellSize * 53) / 2) + "," + i * cellSize * 10.2 + ")"; })
+    .attr("class", "year");
+
+svg.selectAll(".year").append("text")
+    .attr("transform", "translate(-16," + cellSize + ")")
+    .style("text-anchor", "middle")
+    .attr("class", "legend")
+    .text(function(d) { return d; });
+
+var rect = year.selectAll(".week")
+    .data(function(d) { return d3.time.monday.range(new Date(d, 0, 1), new Date(d + 1, 0, 1)); })
+  .enter().append("rect")
+    .attr("class", "week")
+    .attr("width", cellSize)
+    .attr("height", cellSize)
+    .attr("x", function(d) { return getMonth(d) * cellSize * 1.2; })
+    .attr("y", function(d, i) { return Math.floor(getWeek(d) % getMonth(d)  ) * cellSize * 1.2; })
+    .datum(format);
+
+rect.append("title")
+    .text(function(d) { return d + "(Nr. " + d3.time.weekOfYear(d) + ")"; });
+
+/*
+svg.selectAll(".year")
+    .data(function(d) { return d3.time.months(new Date(d, 0, 1), new Date(d + 1, 0, 1)); })
+    .enter().append("rect")
+    .attr("class", "year")
+    .attr("width", 4 * cellSize)
+    .attr("height", cellSize)
+    .attr("x", function(d) { return d3.time.month(d) * cellSize; })
+    .attr("y", function(d) { return 0 * cellSize; });
+//  .enter().append("path")
+//    .attr("class", "year")
+//    .attr("d", monthPath);
+
+function monthPath(t0) {
+  var t1 = new Date(t0.getFullYear(), t0.getMonth() + 1, 0),
+      d0 = t0.getDay(), w0 = d3.time.weekOfYear(t0),
+      d1 = t1.getDay(), w1 = d3.time.weekOfYear(t1);
+  return "M" + (w0 + 1) * cellSize + "," + d0 * cellSize
+      + "H" + w0 * cellSize + "V" + 7 * cellSize
+      + "H" + w1 * cellSize + "V" + (d1 + 1) * cellSize
+      + "H" + (w1 + 1) * cellSize + "V" + 0
+      + "H" + (w0 + 1) * cellSize + "Z";
+}
+*/
+
+</script>
